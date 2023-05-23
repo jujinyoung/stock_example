@@ -9,18 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class StockService {
 
-    private StockRepository stockRepository;
+    private final StockRepository stockRepository;
 
     public StockService(StockRepository stockRepository) {
         this.stockRepository = stockRepository;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public synchronized void decrease(Long id, Long quantity) {
-        // get stock
-        // 재고감소
-        // 저장
-
+    public void decrease(Long id, Long quantity) {
         Stock stock = stockRepository.findById(id).orElseThrow();
 
         stock.decrease(quantity);
